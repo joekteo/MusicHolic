@@ -15,8 +15,17 @@
     "grunt-jscs": "^0.8.1",
     "grunt-simple-mocha": "^0.4.0",
     "jshint": "^2.5.10",
+<<<<<<< HEAD
+<<<<<<< HEAD
+    "mocha": "^2.0.1"
+=======
     "mongodb": "^1.4.20",
     "mongoose": "^3.8.19"
+>>>>>>> master
+=======
+    "mongodb": "^1.4.20",
+    "mongoose": "^3.8.19"
+>>>>>>> master
   },
   "dependencies": {
     "body-parser": "^1.9.2",
