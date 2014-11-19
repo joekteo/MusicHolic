@@ -29,4 +29,4 @@ var SongSchema = mongoose.Schema({
   cached: Boolean
 });
 
-module.exports = exports = mongoose.model('Song', SongSchema);
+module.exports = mongoose.model('Song', SongSchema);
