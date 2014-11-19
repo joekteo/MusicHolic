@@ -2,11 +2,19 @@
 'use strict';
 
 var express = require('express');
+<<<<<<< HEAD
 var mongoose = require('mongoose');
+=======
+var app = express();
+>>>>>>> master
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 var request = require('superagent');
+<<<<<<< HEAD
 var app = express();
 var uri = 'mongodb://simonkim:12qwaszx@ds053080.mongolab.com:53080/musicholic';
+=======
+>>>>>>> master
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
