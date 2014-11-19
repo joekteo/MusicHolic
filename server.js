@@ -8,6 +8,7 @@ var request = require('superagent');
 var app = express();
 var uri = 'mongodb://simonkim:12qwaszx@ds053080.mongolab.com:53080/musicholic';
 
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
