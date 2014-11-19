@@ -2,14 +2,32 @@
 'use strict';
 
 var express = require('express');
+var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var request = require('superagent');
 var app = express();
+var uri = 'mongodb://simonkim:12qwaszx@ds053080.mongolab.com:53080/musicholic';
 
-app.use(express.static(__dirname + '/public/'));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+mongoose.connect(uri);
+
+app.post('/api/song', function(req, res) {
+  var url = 'http://MusicHolic.herokuapp.com/api';
+
+  request
+    .get(url)
+    .end(function(err, songData) {
+      var parsedData = JSON.parse(songData.text);
+
+      res.json(parsedData);
+    });
+});
+
+require('./routes/songs_routes')(app);
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
-  console.log('Server started on port %d', port);
+  console.log('Server started on port: %d', port);
 });
