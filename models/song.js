@@ -1,8 +1,9 @@
 'use strict';
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var SongSchema = mongoose.Schema({
+var SongSchema = new Schema({
   echoData: {
     artist: String,
     title: String,
