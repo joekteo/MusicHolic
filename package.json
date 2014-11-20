@@ -16,14 +16,14 @@
     "grunt-simple-mocha": "^0.4.0",
     "jshint": "^2.5.10",
     "mocha": "^2.0.1",
-    "mongodb": "^1.4.20",
-    "mongoose": "^3.8.19"
+    "mongodb": "^1.4.20"
   },
   "dependencies": {
     "body-parser": "^1.9.2",
     "express": "^4.10.2",
     "jwt-simple": "^0.2.0",
     "moment": "^2.8.4",
+    "mongoose": "^3.8.19",
     "superagent": "^0.21.0",
     "superagent-cli": "^1.2.0"
   },
