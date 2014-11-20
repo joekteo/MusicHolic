@@ -4,9 +4,11 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jwt-simple');
+var Schema = mongoose.Schema;
 
-var userSchema = mongoose.Schema({
+var userSchema = new Schema({
   basic: {
+    screenname: 'String',
     email: 'String',
     password: 'String'
   }
