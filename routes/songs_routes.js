@@ -69,7 +69,7 @@ module.exports = function(app) {
     });
   });
 
-  app.get('/out', function(req, res) {
+  app.get('/api', function(req, res) {
     var url = 'http://musicholic.herokuapp.com/data/song/info';
 
     request
