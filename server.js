@@ -34,7 +34,7 @@ app.get('/data', function(req, res) {
     .end(function(err, songData) {
       var parsedData = songData.body;
 
-      res.json(parsedData);
+      res.redirect(parsedData);
     });
 });
 
