@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 mongoose.connect(uri);
 
-app.get('/api/song', function(req, res) {
+app.get('/data', function(req, res) {
   var url = 'http://musicholic.herokuapp.com/api';
 
   request
