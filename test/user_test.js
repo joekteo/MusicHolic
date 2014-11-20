@@ -1,4 +1,6 @@
+/*jshint node: true*/
 'use strict';
+
 process.env.MONGO_URL = 'mongodb://localhost/3000';
 var User = require('../models/user.js');
 var Song = require('../models/song.js');
@@ -10,7 +12,7 @@ require('../server');
 
 var expect = chai.expect;
 
-describe('basic notes/users tests', function() {
+describe('users tests', function() {
   var jwt;
   var loginJSON = {
     screenName: 'test_user123',
@@ -22,7 +24,6 @@ describe('basic notes/users tests', function() {
     email: 'test_user123@example.com',
     password: '123'
   };
-
   it('should be able to create a new user', function(done) {
     chai.request('http://localhost:3000')
     .post('/api/user')

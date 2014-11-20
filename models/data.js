@@ -8,7 +8,7 @@ var DataSchema = new Schema({
     artist_id: String,
     artist_name: String,
     id: String,
-    title: String,
+    title: String
   }
 });
 
