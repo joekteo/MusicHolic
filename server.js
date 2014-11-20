@@ -14,13 +14,13 @@ app.use(bodyParser.json());
 
 mongoose.connect(uri);
 
-app.post('/api/song', function(req, res) {
+app.get('/api/song', function(req, res) {
   var url = 'http://musicholic.herokuapp.com/api';
 
   request
     .get(url)
     .end(function(err, songData) {
-      var parsedData = JSON.parse(songData.text);
+      var parsedData = songData.body;
 
       res.json(parsedData);
     });
