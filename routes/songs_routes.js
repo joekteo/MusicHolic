@@ -1,3 +1,4 @@
+/*jshint node: true*/
 'use strict';
 var Song = require('../models/song');
 var Data = require('../models/data');
@@ -23,7 +24,6 @@ module.exports = function(app) {
 
   app.get('/data/song', function(req, res) {
     var url = 'http://musicholic.herokuapp.com/data';
-
     request
     .get(url)
     .end(function(err, songData) {
