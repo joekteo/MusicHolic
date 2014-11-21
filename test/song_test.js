@@ -20,11 +20,11 @@ describe('song test', function() {
     send({
       url:'http://developer.echonest.com/api/v4/song/search?' +
       'api_key=' +
-      'FILDTEOIK2HBORODV&artist=kanye%20west&title=all%20of%20the%20lights'
+      'PGTZEGJKHLCVM1ADB&artist=the%20used&title=empty%20with%20you'
       //Echo Nest limits accesses to 2 songs per minute.
       //Test will return 'Cannot read property '0' of undefined' if over limit
       //Comment out line 23 and uncomment line 27 if limit is over
-      //'FILDTEOIK2HBORODV&artist=the%20used&title=empty%20with%20you'
+      //'PGTZEGJKHLCVM1ADB&artist=kanye%20west&title=all%20of%20the%20lights'
     }).
     end(function(err, res) {
       expect(err).to.eql(null);
