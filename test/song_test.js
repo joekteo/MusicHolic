@@ -14,7 +14,7 @@ require('../server');
 var expect = chai.expect;
 
 describe('song test', function() {
-  it('should be able to send json', function(done) {
+  it('should be send req to echonest and return data to user', function(done) {
     chai.request(server).
     post('/api').
     send({

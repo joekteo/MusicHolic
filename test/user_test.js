@@ -1,8 +1,7 @@
-/*jshint node: true*/
+/*jshint node:true*/
 'use strict';
 
-process.env.MONGO_URL = 'mongodb://localhost/3000';
-
+process.env.MONGO_URL = 'mongodb://localhost/users_test';
 var chai = require('chai');
 var chaihttp = require('chai-http');
 chai.use(chaihttp);
@@ -11,49 +10,46 @@ require('../server');
 
 var expect = chai.expect;
 
-describe('users tests', function() {
-  var jwt;
-  var loginJSON = {
-    screenName: 'test_user123',
-    email: 'test_user123@example.com',
-    password: '12345678'
-  };
-  var loginJSONbad = {
-    screenName: 'test_user123',
-    email: 'test_user123@example.com',
-    password: '123'
-  };
-  it('should be able to create a new user', function(done) {
-    chai.request('http://localhost:3000')
-    .post('/api/user')
-    .send(loginJSON)
+describe('back-end tests', function() {
+  var email = 'test@example.com';
+
+  it('should be unable to create user if pw fails', function(done) {
+    chai.request('http://localhost:3000') //change this for each one or die
+    .post('/api/users')
+    .send({
+      email: email,
+      password: 'foobar54',
+      passwordConfirm: 'foobar'
+    })
     .end(function(err, res) {
       expect(err).to.eql(null);
-      expect(res.body).to.have.property('jwt');
-      jwt = res.body.jwt;
-      expect(jwt).to.be.a('string');
+      expect(res.text).to.be.eql('cannot create that user');
       done();
     });
   });
-  it('should refuse to create a new user with short password', function(done) {
+
+  it('should be able to email login + send another token back', function(done) {
     chai.request('http://localhost:3000')
-    .post('/api/user')
-    .send(loginJSONbad)
-    .end(function(err, res) {
-      expect(err).to.eql(null);
-      expect(res.statusCode).to.eql(400);
-      done();
-    });
-  });
-  it('should be able to get a token for an existing user', function(done) {
-    chai.request('http://localhost:3000')
-    .get('/api/user')
-    .auth(loginJSON.email, loginJSON.password)
+    .get('/api/users')
+    .auth(email, 'foobar123')
     .end(function(err, res) {
       expect(err).to.eql(null);
       expect(res.body).to.have.property('jwt');
-      jwt = res.body.jwt;
-      expect(jwt).to.be.a('string');
+      done();
+    });
+  });
+
+  it('should be unable to create an existing user', function(done) {
+    chai.request('http://localhost:3000')
+    .post('/api/users')
+    .send({
+      email: email,
+      password: 'foobar123',
+      passwordConfirm: 'foobar123'
+    })
+    .end(function(err, res) {
+      expect(err).to.eql(null);
+      expect(res.text).to.be.eql('cannot create that user');
       done();
     });
   });
