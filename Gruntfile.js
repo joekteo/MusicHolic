@@ -12,14 +12,14 @@ module.exports = function(grunt) {
     },
 
     jscs: {
-      src: ['test/**/*.js', 'server.js'],
+      src: ['./*.js', 'test/*.js', 'server.js'],
       options: {
         config: '.jscsrc'
       }
     },
 
     simplemocha: {
-      src: ['test/**/*.js']
+      src: ['test/*.js']
     }
   });
 
