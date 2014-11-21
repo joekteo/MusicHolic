@@ -25,7 +25,6 @@ var userRouter = express.Router();
 userRouter.use(jwtauth);
 
 require('./routes/user_routes')(app, passport);
-
 require('./routes/songs_routes')(app);
 
 var port = process.env.PORT || 3000;
