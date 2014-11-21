@@ -8,9 +8,9 @@ var Schema = mongoose.Schema;
 
 var userSchema = new Schema({
   basic: {
-    screenname: 'String',
-    email: 'String',
-    password: 'String'
+    screenname: String,
+    email: String,
+    password: String
   }
 });
 
@@ -26,7 +26,6 @@ userSchema.methods.generateToken = function(secret) {
   var _this = this;
   var token = jwt.encode({
   iss: _this._id,
-  //set expiration date
   exp: Date.now()
 }, secret);
   return token;
