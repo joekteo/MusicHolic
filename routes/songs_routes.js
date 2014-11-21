@@ -1,91 +1,69 @@
 /*jshint node: true*/
 'use strict';
-var Song = require('../models/song');
-var Data = require('../models/data');
+var Url = require('../models/url');
 var score = require('../lib/alg');
+var express = require('express');
 var request = require('superagent');
+var bodyParser = require('body-parser');
+var app = express();
+var async = require('async');
+app.use(bodyParser.json());
 
 module.exports = function(app) {
 
-  app.get('/data', function(req, res) {
-    Data.find({}, function(err, data) {
-      if (err) return res.status(500).send('there was an error');
-      res.json(data);
-    });
-  });
-
-  app.post('/data', function(req, res) {
-    var dataS = new Data(req.body);
-    dataS.save(function(err, data) {
-      if (err) return res.status(500).send('there was an error');
-      res.json(data);
-    });
-  });
-
-  app.get('/data/song', function(req, res) {
-    var url = 'http://musicholic.herokuapp.com/data';
-    request
-    .get(url)
-    .end(function(err, songData) {
-      var parsedData = songData.body;
-      var key = process.env.ECHO_KEY || 'PGTZEGJKHLCVM1ADB';
-
-      var songID = parsedData.response.songs[0].id;
-      var newUrl = 'http://developer.echonest.com/api/v4/song/profile?' +
-      'api_key=' +
-      key +
-      '&id=' +
-      songID +
-      '&bucket=audio_summary&format=json';
-
-      res.json(newUrl);
-    });
-  });
-
-  app.get('/data/song/info', function(req, res) {
-    var url = 'http://musicholic.herokuapp.com/data/song';
-
-    request
-    .get(url)
-    .end(function(err, urlData) {
-      var parsedData = urlData.body;
-
-      res.redirect(parsedData);
-    });
-  });
-
-  app.get('/data/song/info', function(req, res) {
-    Song.find({}, function(err, data) {
-      if (err) return res.status(500).send('there was an error');
-      res.json(data);
-    });
-  });
-
-  app.post('/data/song/info', function(req, res) {
-    var song = new Song(req.body);
-    song.save(function(err, data) {
-      if (err) return res.status(500).send('there was an error');
-      res.json(data);
-    });
+  app.get('/', function(req, res) {
+    res.send('hello world');
   });
 
   app.get('/api', function(req, res) {
-    var url = 'http://musicholic.herokuapp.com/data/song/info';
-
-    request
-    .get(url)
-    .end(function(err, data) {
-      var parsedData = data.body;
-
-      var danceability = parsedData.response.songs[0].audio_summary.
-      danceability;
-      var valence = parsedData.response.songs[0].audio_summary.valence;
-      var energy = parsedData.response.songs[0].audio_summary.energy;
-
-      var songScore = (danceability + energy + valence) / 3;
-      score(songScore);
-
-      res.json(score(songScore));
+    console.log(req.body.url);
+    Url.findOne({'info.url': req.body.url}, function(err, data) {
+      if (err) return res.status(500).send('there was an error');
+      res.send({url : data.info.url});
     });
   });
-};
+
+  app.post('/api', function(req, res) {
+    var songId;
+
+    async.series([
+
+      function(callback){
+        request(req.body.url)
+        .end(function(req,sData) {
+          var parsedData = JSON.parse(sData.text);
+          songId = parsedData.response.songs[0].id;
+          callback(null, 'one');
+        });
+      },
+
+      function(callback){
+        var key = process.env.ECHO_KEY || 'PGTZEGJKHLCVM1ADB';
+        var newUrl = 'http://developer.echonest.com/api/v4/song/profile?' +
+        'api_key=' +
+        key +
+        '&id=' +
+        songId +
+        '&bucket=audio_summary&format=json';
+
+        request(newUrl)
+        .end(function(req,echoData) {
+          var parsedData = JSON.parse(echoData.text);
+          console.log(parsedData);
+          var danceability = parsedData.response.songs[0].audio_summary.
+          danceability;
+          var valence = parsedData.response.songs[0].audio_summary.valence;
+          var energy = parsedData.response.songs[0].audio_summary.energy;
+
+          var songScore = (danceability + energy + valence) / 3;
+          score(songScore);
+          res.json(score(songScore));
+        });
+        callback(null, 'two');
+      }
+      ],
+      function(err, results){
+        return results;
+      });
+    });
+  };
