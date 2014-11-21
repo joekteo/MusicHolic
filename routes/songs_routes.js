@@ -16,10 +16,9 @@ module.exports = function(app) {
   });
 
   app.get('/api', function(req, res) {
-    console.log(req.body.url);
     Url.findOne({'info.url': req.body.url}, function(err, data) {
       if (err) return res.status(500).send('there was an error');
-      res.send({url : data.info.url});
+      res.send({url: data.info.url});
     });
   });
 
@@ -27,17 +26,16 @@ module.exports = function(app) {
     var songId;
 
     async.series([
-
-      function(callback){
+      function(callback) {
         request(req.body.url)
-        .end(function(req,sData) {
+        .end(function(req, sData) {
           var parsedData = JSON.parse(sData.text);
           songId = parsedData.response.songs[0].id;
           callback(null, 'one');
         });
       },
 
-      function(callback){
+      function(callback) {
         var key = process.env.ECHO_KEY || 'PGTZEGJKHLCVM1ADB';
         var newUrl = 'http://developer.echonest.com/api/v4/song/profile?' +
         'api_key=' +
@@ -47,9 +45,8 @@ module.exports = function(app) {
         '&bucket=audio_summary&format=json';
 
         request(newUrl)
-        .end(function(req,echoData) {
+        .end(function(req, echoData) {
           var parsedData = JSON.parse(echoData.text);
-          console.log(parsedData);
           var danceability = parsedData.response.songs[0].audio_summary.
           danceability;
           var valence = parsedData.response.songs[0].audio_summary.valence;
@@ -61,9 +58,9 @@ module.exports = function(app) {
         });
         callback(null, 'two');
       }
-      ],
-      function(err, results){
+    ],
+      function(err, results) {
         return results;
       });
-    });
-  };
+  });
+};

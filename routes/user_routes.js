@@ -17,19 +17,15 @@ module.exports = function(app, passport) {
         return res.status(500).send('cannot create that user');
       if (!req.body.password)
         return res.status(500).send('must include a password');
-      //put in a check password and validation
-      //regex allowing only letters,
-      //numbers and underscores otherwise it won't take password
+
       var check = /^\w+$/;
       if (!check.test(req.body.password))
         return res.status(500).send('password much be ' +
           'only letters and numbers');
-      //check length greater then 6
       if (req.body.password.length < 6)
         return res.status(500).send('make a longer password');
       if (req.body.username === req.body.password)
         return res.status(500).send('passwords cannot match usernames');
-      //pair programed with thewillhuang
 
       var newUser = new User();
       newUser.basic.email = req.body.email;

@@ -2,26 +2,35 @@
 'use strict';
 
 process.env.MONGO_URL = 'mongodb://localhost/3000';
-var User = require('../models/user.js');
-var Song = require('../models/song.js');
 
 var chai = require('chai');
 var chaihttp = require('chai-http');
-chai.use(chaihttp);
+var server = 'http://localhost:' + (process.env.PORT || 3000);
+var expect = chai.expect;
 
-require('./server');
+chai.use(chaihttp);
+require('../server');
 
 var expect = chai.expect;
 
 describe('song test', function() {
-
-  it('should be able to get the song data', function(done) {
-
-  });
-  it('should be able match a song to the drink', function(done) {
-
-  });
-  it('should be able to generate a random song within the score list', function(done) {
-
+  it('should be able to send json', function(done) {
+    chai.request(server).
+    post('/api').
+    send({
+      url:'http://developer.echonest.com/api/v4/song/search?' +
+      'api_key=' +
+      'FILDTEOIK2HBORODV&artist=kanye%20west&title=all%20of%20the%20lights'
+      //Echo Nest limits accesses to 2 songs per minute.
+      //Test will return 'Cannot read property '0' of undefined' if over limit
+      //Comment out line 23 and uncomment line 27 if limit is over
+      //'FILDTEOIK2HBORODV&artist=the%20used&title=empty%20with%20you'
+    }).
+    end(function(err, res) {
+      expect(err).to.eql(null);
+      expect(res.body).to.have.property('name');
+      expect(res.body).to.have.property('imageUrl');
+      done();
+    });
   });
 });

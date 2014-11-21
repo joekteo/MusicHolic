@@ -2,8 +2,8 @@
 'use strict';
 
 process.env.MONGO_URL = 'mongodb://localhost/3000';
-var User = require('../models/user.js');
-var Song = require('../models/song.js');
+// var User = require('../models/user.js');
+// var Song = require('../models/song.js');
 var chai = require('chai');
 var chaihttp = require('chai-http');
 chai.use(chaihttp);
