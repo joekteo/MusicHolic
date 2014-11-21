@@ -29,11 +29,6 @@ module.exports = function(app) {
     async.series([
       function(callback) {
         request(req.body.url)
-          .end(function(req, sData) {
-            var parsedData = JSON.parse(sData.text);
-            songId = parsedData.response.songs[0].id;
-          });
-        callback(null, 'one');
       },
       function(callback) {
         var key = process.env.ECHO_KEY || 'PGTZEGJKHLCVM1ADB';
@@ -45,21 +40,22 @@ module.exports = function(app) {
         '&bucket=audio_summary&format=json';
 
         request(newUrl)
-          .end(function(req, echoData) {
-            var parsedData = JSON.parse(echoData.text);
-            var danceability = parsedData.response.songs[0].audio_summary.
-            danceability;
-            var valence = parsedData.response.songs[0].audio_summary.valence;
-            var energy = parsedData.response.songs[0].audio_summary.energy;
-            var songScore = (danceability + energy + valence);
 
-            score(songScore);
-            res.json(score(songScore));
-          });
+        .end(function(req, echoData) {
+          var parsedData = JSON.parse(echoData.text);
+          var danceability = parsedData.response.songs[0].audio_summary.
+          danceability;
+          var valence = parsedData.response.songs[0].audio_summary.valence;
+          var energy = parsedData.response.songs[0].audio_summary.energy;
+
+          var songScore = (danceability + energy + valence);
+          score(songScore);
+          res.json(score(songScore));
+        });
         callback(null, 'two');
       }
-      ],
-      function(err, results){
+    ],
+      function(err, results) {
         return results;
       });
   });

@@ -26,10 +26,11 @@
     "express": "^4.10.2",
     "jwt-simple": "^0.2.0",
     "moment": "^2.8.4",
-    "mongoose": "^3.8.19"
+    "mongoose": "^3.8.19",
+    "passport": "^0.2.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node_modules/grunt-cli/bin/grunt",
     "start": "node server.js"
   },
   "repository": {

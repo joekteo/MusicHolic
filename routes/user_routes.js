@@ -17,7 +17,7 @@ module.exports = function(app, passport) {
         return res.status(500).send('cannot create that user');
       if (!req.body.password)
         return res.status(500).send('must include a password');
-        
+
       var check = /^\w+$/;
       if (!check.test(req.body.password))
         return res.status(500).send('password much be ' +
