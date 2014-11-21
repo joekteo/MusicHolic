@@ -52,7 +52,7 @@ module.exports = function(app) {
           var valence = parsedData.response.songs[0].audio_summary.valence;
           var energy = parsedData.response.songs[0].audio_summary.energy;
 
-          var songScore = (danceability + energy + valence) / 3;
+          var songScore = (danceability + energy + valence);
           score(songScore);
           res.json(score(songScore));
         });
