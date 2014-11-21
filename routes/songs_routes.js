@@ -5,8 +5,9 @@ var score = require('../lib/alg');
 var express = require('express');
 var request = require('superagent');
 var bodyParser = require('body-parser');
-var app = express();
 var async = require('async');
+var app = express();
+
 app.use(bodyParser.json());
 
 module.exports = function(app) {
@@ -45,6 +46,7 @@ module.exports = function(app) {
         '&bucket=audio_summary&format=json';
 
         request(newUrl)
+
         .end(function(req, echoData) {
           var parsedData = JSON.parse(echoData.text);
           var danceability = parsedData.response.songs[0].audio_summary.
