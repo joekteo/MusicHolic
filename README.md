@@ -1,5 +1,7 @@
 MusicHolic
 ==========
+<img src='https://travis-ci.org/joekteo/MusicHolic.svg?branch=master'></src>
+
 MusicHolic is an iOS application that takes in audio from your mobile device and identifies the artist and song name. The only twist is that a drink is suggested along with your search! Enjoy using this anywhere, from the comforts of your home or even at a bar with friends/strangers!
 
 <b>Pro-tip:</b> Drink selections are based off of a simple algorithm and may not 100% accurately represent its companion song! This will improve over time.
