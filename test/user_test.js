@@ -14,7 +14,7 @@ describe('back-end tests', function() {
   var email = 'test@example.com';
 
   it('should be unable to create user if pw fails', function(done) {
-    chai.request('http://localhost:3000') //change this for each one or die
+    chai.request('http://localhost:3000')
     .post('/api/users')
     .send({
       email: email,

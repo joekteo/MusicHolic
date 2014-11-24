@@ -1,3 +1,4 @@
+/*jshint node:true*/
 'use strict';
 var Url = require('../models/url');
 var score = require('../lib/alg');
