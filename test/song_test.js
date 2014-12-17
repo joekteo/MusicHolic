@@ -15,6 +15,7 @@ var expect = chai.expect;
 
 describe('song test', function() {
   it('should be send req to echonest and return data to user', function(done) {
+    this.timeout(10000);
     chai.request(server).
     post('/api').
     send({
