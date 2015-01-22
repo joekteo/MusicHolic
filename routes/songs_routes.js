@@ -10,11 +10,13 @@ var async = require('async');
 app.use(bodyParser.json());
 
 module.exports = function(app) {
-
+  
+  //mainly used to test if the routing worked.
   app.get('/', function(req, res) {
     res.send('hello world');
   });
 
+  //Gets the JSON data from GraceNote's API used in the iOS front-end
   app.get('/api', function(req, res) {
     console.log(req.body.url);
     Url.findOne({'info.url': req.body.url}, function(err, data) {
@@ -23,6 +25,7 @@ module.exports = function(app) {
     });
   });
 
+  //Posts the JSON data from EchoNest's API gathered from the previous JSON data.
   app.post('/api', function(req, res) {
     var songId;
     async.series([
@@ -45,8 +48,10 @@ module.exports = function(app) {
         console.log(newUrl);
         request(newUrl)
          .end(function(req, echoData) {
+           //parses the JSON and allows portions to become readable so that the algorithm can work.
            var parsedData = JSON.parse(echoData.text);
            console.log(parsedData);
+           //Gets the numerical values of these music traits.
            var danceability = parsedData.response.songs[0].audio_summary.
            danceability;
            var valence = parsedData.response.songs[0].audio_summary.valence;
