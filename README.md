@@ -12,5 +12,5 @@ The iOS portion was covered by Jeff Chavez <i>(https://github.com/jeffChavez)</i
 
 The application was created with the help of the Gracenote and Echo Nest API.
 
-![Screenshot 1] (https://github.com/joekteo/Musicholic/public/images/mh01.png)
-![Screenshot 1] (https://github.com/joekteo/Musicholic/public/images/mh02.png)
+![Screenshot 1] (https://github.com/joekteo/MusicHolic/blob/master/public/images/mh01.png)
+![Screenshot 2] (https://github.com/joekteo/MusicHolic/blob/master/public/images/mh02.png)
