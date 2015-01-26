@@ -11,3 +11,6 @@ This repository contains the back-end (server) of the application and is Joe K. 
 The iOS portion was covered by Jeff Chavez <i>(https://github.com/jeffChavez)</i> and Parker Lewis <i>(https://github.com/pakalewis)</i> and can be found at <i>https://github.com/jeffChavez/Musicholic-v2.</i>
 
 The application was created with the help of the Gracenote and Echo Nest API.
+
+![Screenshot 1] (https://github.com/joekteo/Musicholic/public/images/mh01.png)
+![Screenshot 1] (https://github.com/joekteo/Musicholic/public/images/mh02.png)
